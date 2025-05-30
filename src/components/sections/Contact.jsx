@@ -1,28 +1,47 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
+  const [status, setStatus] = useState("");
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: true,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log(formData);
+    setStatus("sending"); // Add loading state
+    try {
+      const response = await fetch("https://your-backend-url/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" }); // Clear form
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setStatus("error");
+    }
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -79,7 +98,7 @@ const Contact = () => {
               <div className="mt-8">
                 <h4 className="text-xl font-semibold mb-4">Follow Me</h4>
                 <div className="flex space-x-4">
-                  {['GitHub', 'LinkedIn', 'Twitter'].map((platform, index) => (
+                  {["GitHub", "LinkedIn", "Twitter"].map((platform, index) => (
                     <motion.a
                       key={platform}
                       href="#"
@@ -150,6 +169,19 @@ const Contact = () => {
               >
                 Send Message
               </motion.button>
+              {status === "success" && (
+                <div className="text-green-500 mt-2">
+                  Message sent successfully!
+                </div>
+              )}
+              {status === "error" && (
+                <div className="text-red-500 mt-2">
+                  Failed to send message. Please try again.
+                </div>
+              )}
+              {status === "sending" && (
+                <div className="text-blue-500 mt-2">Sending message...</div>
+              )}
             </motion.form>
           </div>
         </motion.div>
