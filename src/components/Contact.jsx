@@ -10,57 +10,59 @@ const Contact = () => {
     const [status, setStatus] = useState('idle');
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus('sending');
-        
-        try {
-            // Using your Render.com backend URL
-            const response = await fetch(`https://portfolio-backend-xkvr.onrender.com/api/contact`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
+    e.preventDefault();
+    setStatus('sending');
+    console.log("Sending data:", formData);
+    
+    try {
+        const response = await fetch('https://portfolio-backend-zq5y.onrender.com/api/contact', {
+            method: 'POST',  // Make sure this is uppercase 'POST'
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'  // Added this header
+            },
+            body: JSON.stringify(formData),
+            mode: 'cors'  // Added this explicitly
+        });
 
-            const data = await response.json();
+        const responseData = await response.json();
+        console.log("Response:", responseData);
+        
+        if (response.ok) {
+            setStatus('success');
+            setFormData({
+                name: '',
+                email: '',
+                message: ''
+            });
             
-            if (response.ok) {
-                setStatus('success');
-                setFormData({
-                    name: '',
-                    email: '',
-                    message: ''
-                });
-                // Show success message to user
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.textContent = 'Message sent successfully!';
-                e.target.appendChild(successMessage);
-                
-                // Remove message after 3 seconds
-                setTimeout(() => {
-                    successMessage.remove();
-                }, 3000);
-            } else {
-                throw new Error(data.message || 'Failed to send message');
-            }
-        } catch (error) {
-            setStatus('error');
-            // Show error message to user
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-message';
-            errorMessage.textContent = error.message || 'Failed to send message. Please try again.';
-            e.target.appendChild(errorMessage);
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.textContent = 'Message sent successfully!';
+            e.target.appendChild(successMessage);
             
-            // Remove message after 3 seconds
             setTimeout(() => {
-                errorMessage.remove();
+                successMessage.remove();
             }, 3000);
-        } finally {
-            setStatus('idle');
+        } else {
+            throw new Error(responseData.message || 'Failed to send message');
         }
-    };
+    } catch (error) {
+        console.error("Error sending message:", error);
+        setStatus('error');
+        
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = error.message || 'Failed to send message. Please try again.';
+        e.target.appendChild(errorMessage);
+        
+        setTimeout(() => {
+            errorMessage.remove();
+        }, 3000);
+    } finally {
+        setStatus('idle');
+    }
+};
 
     const handleChange = (e) => {
         setFormData({
