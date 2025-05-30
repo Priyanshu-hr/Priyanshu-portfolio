@@ -13,6 +13,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  /* Pure black background */
   background-color: #000000;
   color: #ffffff;
 }
@@ -21,20 +22,83 @@ body {
   width: 100%;
   min-height: 100vh;
 }
-.perspective-text {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-/* Add these styles to your existing CSS */
-@font-face {
-  font-family: 'Impact';
-  src: local('Impact');
+
+/* Clean scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.font-impact {
-  font-family: 'Impact', system-ui, -apple-system, sans-serif;
+::-webkit-scrollbar-track {
+  background: #000000;
 }
 
-nav {
-  background-color: #1a1a1a;
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+/* Add these to your existing CSS */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+.nav-brand:hover .brand-icon {
+  transform: rotate(360deg);
+  transition: transform 0.8s ease;
+}
+@layer utilities {
+  .text-shadow-neon {
+    text-shadow: 0 0 5px rgba(139, 92, 246, 0.5),
+                 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .scanline {
+    animation: scanline 8s linear infinite;
+  }
+}
+@layer utilities {
+  .cyberpunk-shadow {
+    text-shadow: 
+      2px 2px 0px #00ff9d,
+      -2px -2px 0px #00ff9d;
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  .scanline {
+    animation: scanline 3s linear infinite;
+  }
 }

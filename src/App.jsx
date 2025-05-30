@@ -10,20 +10,31 @@ import Footer from './components/layout/Footer';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    try {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        console.log('Loading complete'); // Debug log
+      }, 1000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    } catch (err) {
+      console.error('Loading error:', err);
+      setError(err);
+    }
   }, []);
 
+  // Add error UI
+  if (error) {
+    return <div className="text-white p-4">Error loading app: {error.message}</div>;
+  }
+
   return (
-    <div className="bg-black min-h-screen text-white">
+    <div className="min-h-screen bg-[#030014]"> {/* Add background color explicitly */}
       {loading ? (
-        <div className="h-screen flex items-center justify-center">
+        <div className="h-screen flex items-center justify-center bg-[#030014]">
           <motion.div
             animate={{
               scale: [1, 2, 2, 1, 1],
@@ -35,17 +46,17 @@ function App() {
           />
         </div>
       ) : (
-        <>
+        <div className="relative">
           <Navbar />
-          <main>
-            <Hero />
-            <About />
-            <Projects />
-            <Skills />
-            <Contact />
+          <main className="relative">
+            <div id="hero-section"><Hero /></div>
+            <div id="about-section"><About /></div>
+            <div id="projects-section"><Projects /></div>
+            <div id="skills-section"><Skills /></div>
+            <div id="contact-section"><Contact /></div>
           </main>
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );

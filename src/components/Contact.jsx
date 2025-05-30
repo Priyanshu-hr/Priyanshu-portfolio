@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Contact.css';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -6,12 +7,14 @@ const Contact = () => {
         email: '',
         message: ''
     });
+    const [status, setStatus] = useState('idle');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setStatus('sending');
         
         try {
-            // This is the fetch call to your backend
+            // Using your Render.com backend URL
             const response = await fetch('https://portfolio-backend-zq5y.onrender.com/api/contact', {
                 method: 'POST',
                 headers: {
@@ -20,20 +23,42 @@ const Contact = () => {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json();
+            
             if (response.ok) {
-                alert('Message sent successfully!');
-                // Clear the form
+                setStatus('success');
                 setFormData({
                     name: '',
                     email: '',
                     message: ''
                 });
+                // Show success message to user
+                const successMessage = document.createElement('div');
+                successMessage.className = 'success-message';
+                successMessage.textContent = 'Message sent successfully!';
+                e.target.appendChild(successMessage);
+                
+                // Remove message after 3 seconds
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 3000);
             } else {
-                alert('Failed to send message. Please try again.');
+                throw new Error(data.message || 'Failed to send message');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
+            setStatus('error');
+            // Show error message to user
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.textContent = error.message || 'Failed to send message. Please try again.';
+            e.target.appendChild(errorMessage);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                errorMessage.remove();
+            }, 3000);
+        } finally {
+            setStatus('idle');
         }
     };
 
@@ -76,7 +101,13 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                 ></textarea>
-                <button type="submit" className="btn">Send Message</button>
+                <button 
+                    type="submit" 
+                    className="btn"
+                    disabled={status === 'sending'}
+                >
+                    {status === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
             </form>
         </section>
     );

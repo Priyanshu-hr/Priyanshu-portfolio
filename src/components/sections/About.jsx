@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-
 const About = () => {
   const [ref, inView] = useInView({
     threshold: 0.3,
@@ -28,14 +27,18 @@ const About = () => {
               {/* Main Image */}
               <div className="w-full h-[600px] relative overflow-hidden rounded-2xl shadow-xl">
                 <img 
-                   src="/assets/profile.jpg" 
-                  alt="Priyanshu Prajapati"
-                  className="w-full h-full object-cover object-center"
-                  style={{
-                    objectPosition: 'center center', // Ensures image is centered
-                    backgroundColor: 'rgba(0,0,0,0.05)' // Subtle background for empty spaces
-                  }}
-                />
+                 src="https://raw.githubusercontent.com/Priyanshu-hr/Priyanshu-portfolio/main/public/assets/images/profile.jpg"
+          alt="Priyanshu Prajapati"
+          className="w-full h-full object-cover object-center"
+          style={{
+            objectPosition: 'center center',
+            backgroundColor: 'rgba(0,0,0,0.05)'
+          }}
+          onError={(e) => {
+            console.error('Image failed to load');
+            e.target.src = 'https://github.com/Priyanshu-hr.png'; // Fallback to GitHub profile
+          }}
+        />
                 {/* Decorative Elements */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 <div className="absolute -bottom-2 -left-2 w-24 h-24 bg-blue-500/10 backdrop-blur-sm rounded-full"></div>
