@@ -16,7 +16,7 @@ const Contact = () => {
         try {
             // Using your Render.com backend URL
             const response = await fetch(`https://portfolio-backend-xkvr.onrender.com/api/contact`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
