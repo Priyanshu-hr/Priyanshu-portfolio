@@ -18,8 +18,7 @@ const Contact = () => {
     e.preventDefault();
     setStatus("sending"); // Add loading state
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/contact`, {
-        method: "POST",
+      const response = await fetch(`https://portfolio-backend-zq5y.onrender.com/api/contact`, {
         headers: {
           "Content-Type": "application/json",
         },
