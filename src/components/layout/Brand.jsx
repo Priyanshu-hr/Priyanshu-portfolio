@@ -14,7 +14,7 @@ const Brand = () => {
     >
       {/* Main Brand Container */}
       <div className="relative">
-        {/* Glow Effect Background */}
+       
         <motion.div
           className="absolute -inset-2 from-blue-500 to-purple-600 opacity-[0.15] blur-lg rounded-full"
           animate={{

@@ -16,7 +16,7 @@ function App() {
     try {
       const timer = setTimeout(() => {
         setLoading(false);
-        console.log('Loading complete'); // Debug log
+        console.log('Loading complete'); 
       }, 1000);
 
       return () => clearTimeout(timer);
@@ -26,7 +26,7 @@ function App() {
     }
   }, []);
 
-  // Add error UI
+ 
   if (error) {
     return <div className="text-white p-4">Error loading app: {error.message}</div>;
   }

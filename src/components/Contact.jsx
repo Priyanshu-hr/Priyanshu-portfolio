@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendContactForm } from '../api';
+import axios from 'axios';  
 import './Contact.css';
 
 const Contact = () => {
@@ -13,12 +13,15 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('sending');
-        console.log("Sending data:", formData); // Debug log
         
         try {
-            const result = await sendContactForm(formData);
-            console.log('Response:', result); // Debug log
+            const response = await axios.post('https://portfolio-backend-zq5y.onrender.com/api/contact', formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             
+            console.log('Response:', response.data);
             setStatus('success');
             setFormData({
                 name: '',
@@ -26,39 +29,20 @@ const Contact = () => {
                 message: ''
             });
             
-            // Show success message
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.textContent = 'Message sent successfully!';
-            e.target.appendChild(successMessage);
-            
-            setTimeout(() => {
-                successMessage.remove();
-            }, 3000);
+            alert('Message sent successfully!');
             
         } catch (error) {
-            console.error('Error:', error); // Debug log
+            console.error('Error:', error);
             setStatus('error');
-            
-            // Show error message
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-message';
-            errorMessage.textContent = 'Failed to send message. Please try again.';
-            e.target.appendChild(errorMessage);
-            
-            setTimeout(() => {
-                errorMessage.remove();
-            }, 3000);
-        } finally {
-            setStatus('idle');
+            alert('Failed to send message. Please try again.');
         }
     };
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [e.target.name]: e.target.value
-        });
+        }));
     };
 
     return (

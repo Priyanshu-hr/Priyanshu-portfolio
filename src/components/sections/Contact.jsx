@@ -16,7 +16,7 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("sending"); // Add loading state
+    setStatus("sending"); 
     try {
       const response = await fetch(`https://portfolio-backend-zq5y.onrender.com/api/contact`, {
         headers: {
@@ -27,8 +27,7 @@ const Contact = () => {
 
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", message: "" }); // Clear form
-      } else {
+        setFormData({ name: "", email: "", message: "" }); 
         setStatus("error");
       }
     } catch (error) {

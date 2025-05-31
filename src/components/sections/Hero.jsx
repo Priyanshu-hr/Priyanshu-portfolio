@@ -57,7 +57,7 @@ const Hero = () => {
             <FaGithub className="w-8 h-8" />
           </a>
           <a
-            href="https://linkedin.com/in/priyanshu-parjapat" // Replace with your LinkedIn URL
+            href="https://linkedin.com/in/priyanshu-parjapat" 
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-blue-400 transition-colors duration-300"

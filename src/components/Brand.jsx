@@ -1,4 +1,4 @@
-// Fix 1: Import motion properly
+
 import { motion } from 'framer-motion';
 
 const Brand = () => {

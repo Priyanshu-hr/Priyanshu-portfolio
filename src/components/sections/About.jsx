@@ -36,7 +36,7 @@ const About = () => {
           }}
           onError={(e) => {
             console.error('Image failed to load');
-            e.target.src = 'https://github.com/Priyanshu-hr.png'; // Fallback to GitHub profile
+            e.target.src = 'https://github.com/Priyanshu-hr.png'; 
           }}
         />
                 {/* Decorative Elements */}

@@ -12,7 +12,7 @@ const Footer = () => {
         >
           <div className="text-gray-400 mb-4 md:mb-0">
             <p>© {new Date().getFullYear()} Priyanshu-hr. All rights reserved.</p>
-            <p className="text-sm">Last updated: 2025-05-29 06:24:19 UTC</p>
+            <p className="text-sm">Last updated: 2025-05-31 14:18:19 UTC</p>
           </div>
           <div className="flex flex-col items-end">
             <div className="flex space-x-6 mb-2">

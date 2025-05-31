@@ -35,7 +35,6 @@
     cursor: not-allowed;
 }
 
-/* Make sure form elements are properly styled */
 .contact form {
     max-width: 70rem;
     margin: 2rem auto;
@@ -68,7 +67,7 @@
     resize: none;
 }
 
-/* Improve button styles */
+
 .btn {
     position: relative;
     display: inline-block;

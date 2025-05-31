@@ -11,7 +11,7 @@ const Contact = () => {
         e.preventDefault();
         
         try {
-            // This is the fetch call to your backend
+            
             const response = await fetch('https://portfolio-backend-zq5y.onrender.com/api/contact', {
                 method: 'POST',
                 headers: {

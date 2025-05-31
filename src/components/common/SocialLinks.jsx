@@ -12,7 +12,7 @@ const SocialLinks = ({ className = '' }) => {
     {
       id: 2,
       icon: <FaLinkedin className="w-6 h-6" />,
-      href: "https://linkedin.com/in/priyanshu-parjapat", // Replace with your LinkedIn profile URL
+      href: "https://linkedin.com/in/priyanshu-parjapat",
       label: "LinkedIn",
       hoverColor: "hover:text-blue-400"
     }
