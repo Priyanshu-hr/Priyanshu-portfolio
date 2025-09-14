@@ -18,7 +18,8 @@ const Contact = () => {
     e.preventDefault();
     setStatus("sending"); 
     try {
-      const response = await fetch(`https://portfolio-backend-zq5y.onrender.com/api/contact`, {
+      const response = await fetch(`http://localhost:3001/api/contact`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -28,6 +29,7 @@ const Contact = () => {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" }); 
+      } else {
         setStatus("error");
       }
     } catch (error) {

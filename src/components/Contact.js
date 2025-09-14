@@ -29,7 +29,9 @@ const Contact = () => {
                     message: ''
                 });
             } else {
-                alert('Failed to send message. Please try again.');
+                // Try to get error message from backend
+                const errorData = await response.json();
+                alert(errorData.error || 'Failed to send message. Please try again.');
             }
         } catch (error) {
             console.error('Error:', error);
